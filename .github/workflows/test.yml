@@ -2,9 +2,8 @@ name: test
 
 on:
   push:
-    branches:
-      - main
   pull_request:
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -25,7 +24,7 @@ jobs:
       - run: gleam test
 
   image:
-    if: github.event_name == 'push'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: test
     runs-on: ubuntu-latest
     permissions:
